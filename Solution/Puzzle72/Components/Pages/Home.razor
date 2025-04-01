@@ -1,0 +1,440 @@
+﻿@page "/"
+@using Puzzle72.Models
+
+<PageTitle>Home</PageTitle>
+
+<h1>Blazor Puzzle #72</h1>
+
+<p>We have several lists, some of which are shown to one customer but not another.</p>
+
+<p>We want to arrange them, no matter how many there are, in a bootstrap grid of three columns per row with no gaps.</p>
+
+<p>
+    For demonstration purposes, we only have eight lists, but imagine there were 20 or more possible lists, each
+    may be shown or not shown.
+</p>
+
+<p>
+    How can we make this UI dynamic, so that it only shows the lists that we want without leaving gaps in the grid.
+    To get you started, we have created a dictionary that tells you whether or not to show a list.
+</p>
+
+<p>
+    This is really a puzzle of how to make bootstrap rows and columns dynamic.
+    We don't know which lists, and therefore how many, need to be shown in the grid at runtime.
+</p>
+
+<div class="container mt-4">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @if (ShowList["Colors"])
+        {
+            <div class="col">
+                <label for="color">Color</label>
+                <br />
+                <select id="color" class="form-select" @onchange="ColorSelected">
+                    <option value="0">None</option>
+                    @foreach (var color in Colors.List)
+                    {
+                        if (SelectedColor != null
+                        && SelectedColor.Id == color.Id)
+                        {
+                            <option value="@color.Id" selected>@color.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@color.Id">@color.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        }
+
+        @if (ShowList["Episodes"])
+        {
+            <div class="col">
+                <label for="episode">Episode</label>
+                <br />
+                <select id="episode" class="form-select" @onchange="EpisodeSelected">
+                    <option value="0">None</option>
+                    @foreach (var episode in Episodes.List)
+                    {
+                        if (SelectedEpisode != null
+                        && SelectedEpisode.Number == episode.Number)
+                        {
+                            <option value="@episode.Number" selected>@episode.Title</option>
+                        }
+                        else
+                        {
+                            <option value="@episode.Number">@episode.Title</option>
+                        }
+                    }
+                </select>
+            </div>
+        }
+
+        @if (ShowList["Friends"])
+        {
+            <div class="col">
+                <label for="friend">Friend</label>
+                <br />
+                <select id="friend" class="form-select" @onchange="FriendSelected">
+                    <option value="0">None</option>
+                    @foreach (var friend in Friends.List)
+                    {
+                        if (SelectedFriend != null
+                        && SelectedFriend.Id == friend.Id)
+                        {
+                            <option value="@friend.Id" selected>@friend.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@friend.Id">@friend.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        }
+
+        @if (ShowList["Fruits"])
+        {
+            <div class="col">
+                <label for="fruit">Fruit</label>
+                <br />
+                <select id="fruit" class="form-select" @onchange="FruitSelected">
+                    <option value="0">None</option>
+                    @foreach (var fruit in Fruits.List)
+                    {
+                        if (SelectedFruit != null
+                        && SelectedFruit.Id == fruit.Id)
+                        {
+                            <option value="@fruit.Id" selected>@fruit.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@fruit.Id">@fruit.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        }
+
+        @if (ShowList["Languages"])
+        {
+            <div class="col">
+                <label for="language">Language</label>
+                <br />
+                <select id="language" class="form-select" @onchange="LanguageSelected">
+                    <option value="0">None</option>
+                    @foreach (var language in Languages.List)
+                    {
+                        if (SelectedLanguage != null
+                        && SelectedLanguage.Id == language.Id)
+                        {
+                            <option value="@language.Id" selected>@language.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@language.Id">@language.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        }
+
+        @if (ShowList["Metals"])
+        {
+            <div class="col">
+                <label for="metal">Metal</label>
+                <br />
+                <select id="metal" class="form-select" @onchange="MetalSelected">
+                    <option value="0">None</option>
+                    @foreach (var metal in Metals.List)
+                    {
+                        if (SelectedMetal != null
+                        && SelectedMetal.Id == metal.Id)
+                        {
+                            <option value="@metal.Id" selected>@metal.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@metal.Id">@metal.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        }
+
+        @if (ShowList["Pets"])
+        {
+            <div class="col">
+                <label for="pet">Pet</label>
+                <br />
+                <select id="pet" class="form-select" @onchange="PetSelected">
+                    <option value="0">None</option>
+                    @foreach (var pet in Pets.List)
+                    {
+                        if (SelectedPet != null
+                        && SelectedPet.Id == pet.Id)
+                        {
+                            <option value="@pet.Id" selected>@pet.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@pet.Id">@pet.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        }
+
+        @if (ShowList["Vegetables"])
+        {
+            <div class="col">
+                <label for="vegetable">Vegetable</label>
+                <br />
+                <select id="vegetable" class="form-select" @onchange="VegetableSelected">
+                    <option value="0">None</option>
+                    @foreach (var vegetable in Vegetables.List)
+                    {
+                        if (SelectedVegetable != null
+                        && SelectedVegetable.Id == vegetable.Id)
+                        {
+                            <option value="@vegetable.Id" selected>@vegetable.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@vegetable.Id">@vegetable.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        }
+    </div>
+</div>
+<br />
+<br />
+<h3>Show or Hide Lists</h3>
+@foreach (var kvp in ShowList)
+{
+    <div>
+        <input type="checkbox" checked="@kvp.Value" @onchange="e => Toggle(kvp.Key, e)" />
+        <label>@kvp.Key</label>
+    </div>
+}
+
+<br />
+<br />
+
+@if (ShowList["Colors"])
+{
+    <h4>Selected Color</h4>
+    @if (SelectedColor == null)
+    {
+        <p>No color selected</p>
+    }
+    else
+    {
+        <p>Color: @SelectedColor.Name</p>
+    }
+}
+
+@if (ShowList["Episodes"])
+{
+    <h4>Selected Episode</h4>
+    @if (SelectedEpisode == null)
+    {
+        <p>No episode selected</p>
+    }
+    else
+    {
+        <p>Episode: @SelectedEpisode.Title: @SelectedEpisode.Title</p>
+    }
+}
+
+@if (ShowList["Friends"])
+{
+    <h4>Selected Friend</h4>
+    @if (SelectedFriend == null)
+    {
+        <p>No friend selected</p>
+    }
+    else
+    {
+        <p>Friend: @SelectedFriend.Name</p>
+    }
+}
+
+@if (ShowList["Fruits"])
+{
+    <h4>Selected Fruit</h4>
+    @if (SelectedFruit == null)
+    {
+        <p>No fruit selected</p>
+    }
+    else
+    {
+        <p>Fruit: @SelectedFruit.Name</p>
+    }
+}
+
+@if (ShowList["Languages"])
+{
+    <h4>Selected Language</h4>
+    @if (SelectedLanguage == null)
+    {
+        <p>No language selected</p>
+    }
+    else
+    {
+        <p>Language: @SelectedLanguage.Name</p>
+    }
+}
+
+@if (ShowList["Metals"])
+{
+    <h4>Selected Metal</h4>
+    @if (SelectedMetal == null)
+    {
+        <p>No metal selected</p>
+    }
+    else
+    {
+        <p>Metal: @SelectedMetal.Name</p>
+    }
+}
+
+@if (ShowList["Pets"])
+{
+    <h4>Selected Pet</h4>
+    @if (SelectedPet == null)
+    {
+        <p>No pet selected</p>
+    }
+    else
+    {
+        <p>Pet: @SelectedPet.Name</p>
+    }
+}
+
+@if (ShowList["Vegetables"])
+{
+    <h4>Selected Vegetable</h4>
+    @if (SelectedVegetable == null)
+    {
+        <p>No vegetable selected</p>
+    }
+    else
+    {
+        <p>Vegetable: @SelectedVegetable.Name</p>
+    }
+}
+
+@code
+{
+
+    Color SelectedColor;
+    Episode SelectedEpisode;
+    Friend SelectedFriend;
+    Fruit SelectedFruit;
+    Language SelectedLanguage;
+    Metal SelectedMetal;
+    Pet SelectedPet;
+    Vegetable SelectedVegetable;
+
+    // This dictionary will simulate logic to tell whether or not a list should be shown
+    Dictionary<string, bool> ShowList = new()
+    {
+        { "Colors", true },
+        { "Episodes", true },
+        { "Friends", true },
+        { "Fruits", true },
+        { "Languages", true },
+        { "Metals", true },
+        { "Pets", true },
+        { "Vegetables", true }
+    };
+
+    private void Toggle(string key, ChangeEventArgs e)
+    {
+        if (e.Value is bool value)
+        {
+            ShowList[key] = value;
+        }
+        else if (bool.TryParse(e.Value?.ToString(), out var parsed))
+        {
+            ShowList[key] = parsed;
+        }
+    }
+
+    void ColorSelected(ChangeEventArgs e)
+    {
+        int colorId = Convert.ToInt32(e.Value);
+        if (colorId == 0)
+            SelectedColor = null;
+        else
+            SelectedColor = Colors.List.FirstOrDefault(c => c.Id == colorId);
+    }
+
+    void EpisodeSelected(ChangeEventArgs e)
+    {
+        int episodeNumber = Convert.ToInt32(e.Value);
+        if (episodeNumber == 0)
+            SelectedEpisode = null;
+        else
+            SelectedEpisode = Episodes.List.FirstOrDefault(ep => ep.Number == episodeNumber);
+    }
+
+    void FriendSelected(ChangeEventArgs e)
+    {
+        int friendId = Convert.ToInt32(e.Value);
+        if (friendId == 0)
+            SelectedFriend = null;
+        else
+            SelectedFriend = Friends.List.FirstOrDefault(fr => fr.Id == friendId);
+    }
+
+    void FruitSelected(ChangeEventArgs e)
+    {
+        int fruitId = Convert.ToInt32(e.Value);
+        if (fruitId == 0)
+            SelectedFruit = null;
+        else
+            SelectedFruit = Fruits.List.FirstOrDefault(f => f.Id == fruitId);
+    }
+
+    void LanguageSelected(ChangeEventArgs e)
+    {
+        int languageId = Convert.ToInt32(e.Value);
+        if (languageId == 0)
+            SelectedLanguage = null;
+        else
+            SelectedLanguage = Languages.List.FirstOrDefault(l => l.Id == languageId);
+    }
+
+    void MetalSelected(ChangeEventArgs e)
+    {
+        int metalId = Convert.ToInt32(e.Value);
+        if (metalId == 0)
+            SelectedMetal = null;
+        else
+            SelectedMetal = Metals.List.FirstOrDefault(m => m.Id == metalId);
+    }
+
+    void PetSelected(ChangeEventArgs e)
+    {
+        int petId = Convert.ToInt32(e.Value);
+        if (petId == 0)
+            SelectedPet = null;
+        else
+            SelectedPet = Pets.List.FirstOrDefault(p => p.Id == petId);
+    }
+
+    void VegetableSelected(ChangeEventArgs e)
+    {
+        int vegetableId = Convert.ToInt32(e.Value);
+        if (vegetableId == 0)
+            SelectedVegetable = null;
+        else
+            SelectedVegetable = Vegetables.List.FirstOrDefault(v => v.Id == vegetableId);
+    }
+}
