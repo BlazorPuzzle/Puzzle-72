@@ -21,56 +21,87 @@ This is really a puzzle of how to make bootstrap rows and columns dynamic. We do
 
 ## The Solution
 
-The solution is to change the row div to use a bootstrap grid with `row-cols-3`:
+The simple solution is to move the `<div class="col">` tags inside the ShowList test.
+
+From this:
 
 ```html
-<div class="container mt-4">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        ...
-    </div>
-</div>
+<div class="col-4">
+    @if (ShowList["Colors"])
+    { ...
 ```
 
-Then we can simply use the `col` class for our `<select>` elements:
+To this:
 
 ```html
-<div class="container mt-4">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col">
-           <!-- Select goes here -->
-        </div>
-    </div>
-</div>
+@if (ShowList["Colors"])
+{ 
+    <div class="col-4">
+    ...
 ```
 
-Now we can only express a column div for each list we have visible:
+We also have to remove the extra row divs. Remove these:
 
 ```html
+    </div>
+    <div class="row mb-3">
+```
+
+Jeff took this solution to another level by wrapping the entire column div into a Blazor component.
+
+*MyList.razor*:
+
+```c#
+@typeparam TItem
+@if (ShowList)
+{
+	<div class="col">
+		<label for="@Title.ToLowerInvariant()">@Title</label>
+		<br />
+		<select id="@Title.ToLowerInvariant()" class="form-select" @onchange="OnSelected">
+			<option value="0">None</option>
+			@foreach (var item in Items)
+			{
+				<option value="@ItemValue(item)"
+					selected="@(SelectedItem is not null && ItemValue(SelectedItem) == ItemValue(item) ? "selected" : null)">
+					@ItemText(item)
+				</option>
+			}
+		</select>
+	</div>
+}
+
+@code {
+
+	[Parameter] public bool ShowList { get; set; }
+	[Parameter] public string Title { get; set; }
+	[Parameter] public IEnumerable<TItem> Items { get; set; }
+	[Parameter] public EventCallback<ChangeEventArgs> OnSelected { get; set; }
+	[Parameter] public TItem SelectedItem { get; set; }
+	[Parameter] public Func<TItem, string> ItemText { get; set; }
+	[Parameter] public Func<TItem, string> ItemValue { get; set; }
+}
+```
+
+Then you can just add components for each model inside the row:
+
+```xml
 <div class="container mt-4">
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        @if (ShowList["Colors"])
-        {
-            <div class="col">
-                <label for="color">Color</label>
-                <br />
-                <select id="color" class="form-select" @onchange="ColorSelected">
-                    <option value="0">None</option>
-                    @foreach (var color in Colors.List)
-                    {
-                        if (SelectedColor != null
-                        && SelectedColor.Id == color.Id)
-                        {
-                            <option value="@color.Id" selected>@color.Name</option>
-                        }
-                        else
-                        {
-                            <option value="@color.Id">@color.Name</option>
-                        }
-                    }
-                </select>
-            </div>
-        }
-        ...
+        <MyList ShowList="@ShowList["Colors"]" 
+                Title="Colors" Items="@Colors.List" 
+                OnSelected="ColorSelected" 
+                SelectedItem="@SelectedColor" 
+                ItemText="c => c.Name" 
+                ItemValue="c => c.Id.ToString()" />
+
+        <MyList ShowList="@ShowList["Episodes"]" 
+                Title="Episodes" Items="@Episodes.List" 
+                OnSelected="EpisodeSelected" 
+                SelectedItem="@SelectedEpisode" 
+                ItemText="e => e.Title" 
+                ItemValue="e => e.Number.ToString()" />
+...
 ```
 
 Boom!
