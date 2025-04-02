@@ -1,7 +1,7 @@
 @typeparam TItem
-@if (ShowList)
-{
-	<div class="col-4">
+<div class="col-4">
+	@if (ShowList)
+	{
 		<label for="@Title.ToLowerInvariant()">@Title</label>
 		<br />
 		<select id="@Title.ToLowerInvariant()" class="form-select" @onchange="OnSelected">
@@ -14,8 +14,8 @@
 				</option>
 			}
 		</select>
-	</div>
-}
+	}
+</div>
 
 @code {
 
