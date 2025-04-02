@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using Puzzle72.Models
+@using Puzzle72.Components
 
 <PageTitle>Home</PageTitle>
 
@@ -26,190 +27,66 @@
 
 <div class="container mt-4">
     <div class="row mb-3">
-        <div class="col-4">
-            @if (ShowList["Colors"])
-            {
-                <label for="color">Color</label>
-                <br />
-                <select id="color" class="form-select" @onchange="ColorSelected">
-                    <option value="0">None</option>
-                    @foreach (var color in Colors.List)
-                    {
-                        if (SelectedColor != null
-                        && SelectedColor.Id == color.Id)
-                        {
-                            <option value="@color.Id" selected>@color.Name</option>
-                        }
-                        else
-                        {
-                            <option value="@color.Id">@color.Name</option>
-                        }
-                    }
-                </select>
-            }
+        <MyList ShowList="@ShowList["Colors"]" 
+                Title="Colors" Items="@Colors.List" 
+                OnSelected="ColorSelected" 
+                SelectedItem="@SelectedColor" 
+                ItemText="c => c.Name" 
+                ItemValue="c => c.Id.ToString()" />
 
-        </div>
-        <div class="col-4">
-            @if (ShowList["Episodes"])
-            {
-                <label for="episode">Episode</label>
-                <br />
-                <select id="episode" class="form-select" @onchange="EpisodeSelected">
-                    <option value="0">None</option>
-                    @foreach (var episode in Episodes.List)
-                    {
-                        if (SelectedEpisode != null
-                        && SelectedEpisode.Number == episode.Number)
-                        {
-                            <option value="@episode.Number" selected>@episode.Title</option>
-                        }
-                        else
-                        {
-                            <option value="@episode.Number">@episode.Title</option>
-                        }
-                    }
-                </select>
-            }
-        </div>
-        <div class="col-4">
-            @if (ShowList["Friends"])
-            {
-                <label for="friend">Friend</label>
-                <br />
-                <select id="friend" class="form-select" @onchange="FriendSelected">
-                    <option value="0">None</option>
-                    @foreach (var friend in Friends.List)
-                    {
-                        if (SelectedFriend != null
-                        && SelectedFriend.Id == friend.Id)
-                        {
-                            <option value="@friend.Id" selected>@friend.Name</option>
-                        }
-                        else
-                        {
-                            <option value="@friend.Id">@friend.Name</option>
-                        }
-                    }
-                </select>
-            }
-        </div>
+        <MyList ShowList="@ShowList["Episodes"]" 
+                Title="Episodes" Items="@Episodes.List" 
+                OnSelected="EpisodeSelected" 
+                SelectedItem="@SelectedEpisode" 
+                ItemText="e => e.Title" 
+                ItemValue="e => e.Number.ToString()" />
+
+        <MyList ShowList="@ShowList["Friends"]" 
+                Title="Friends" Items="@Friends.List" 
+                OnSelected="FriendSelected" 
+                SelectedItem="@SelectedFriend" 
+                ItemText="f => f.Name" 
+                ItemValue="f => f.Id.ToString()" />
     </div>
     <div class="row mb-3">
-        <div class="col-4">
-            @if (ShowList["Fruits"])
-            {
-                <label for="fruit">Fruit</label>
-                <br />
-                <select id="fruit" class="form-select" @onchange="FruitSelected">
-                    <option value="0">None</option>
-                    @foreach (var fruit in Fruits.List)
-                    {
-                        if (SelectedFruit != null
-                        && SelectedFruit.Id == fruit.Id)
-                        {
-                            <option value="@fruit.Id" selected>@fruit.Name</option>
-                        }
-                        else
-                        {
-                            <option value="@fruit.Id">@fruit.Name</option>
-                        }
-                    }
-                </select>
-            }
-        </div>
-        <div class="col-4">
-            @if (ShowList["Languages"])
-            {
-                <label for="language">Language</label>
-                <br />
-                <select id="language" class="form-select" @onchange="LanguageSelected">
-                    <option value="0">None</option>
-                    @foreach (var language in Languages.List)
-                    {
-                        if (SelectedLanguage != null
-                        && SelectedLanguage.Id == language.Id)
-                        {
-                            <option value="@language.Id" selected>@language.Name</option>
-                        }
-                        else
-                        {
-                            <option value="@language.Id">@language.Name</option>
-                        }
-                    }
-                </select>
-            }
-        </div>
-        <div class="col-4">
-            @if (ShowList["Metals"])
-            {
-                <label for="metal">Metal</label>
-                <br />
-                <select id="metal" class="form-select" @onchange="MetalSelected">
-                    <option value="0">None</option>
-                    @foreach (var metal in Metals.List)
-                    {
-                        if (SelectedMetal != null
-                        && SelectedMetal.Id == metal.Id)
-                        {
-                            <option value="@metal.Id" selected>@metal.Name</option>
-                        }
-                        else
-                        {
-                            <option value="@metal.Id">@metal.Name</option>
-                        }
-                    }
-                </select>
-            }
-        </div>
+        <MyList ShowList="@ShowList["Fruits"]" 
+                Title="Fruits" Items="@Fruits.List" 
+                OnSelected="FruitSelected" 
+                SelectedItem="@SelectedFruit" 
+                ItemText="f => f.Name" 
+                ItemValue="f => f.Id.ToString()" />
+
+        <MyList ShowList="@ShowList["Languages"]" 
+                Title="Languages" Items="@Languages.List" 
+                OnSelected="LanguageSelected" 
+                SelectedItem="@SelectedLanguage" 
+                ItemText="l => l.Name" 
+                ItemValue="l => l.Id.ToString()" />
+
+        <MyList ShowList="@ShowList["Metals"]" 
+                Title="Metals" Items="@Metals.List" 
+                OnSelected="MetalSelected" 
+                SelectedItem="@SelectedMetal" 
+                ItemText="m => m.Name" 
+                ItemValue="m => m.Id.ToString()" />
     </div>
     <div class="row mb-3">
-        <div class="col-4">
-            @if (ShowList["Pets"])
-            {
-                <label for="pet">Pet</label>
-                <br />
-                <select id="pet" class="form-select" @onchange="PetSelected">
-                    <option value="0">None</option>
-                    @foreach (var pet in Pets.List)
-                    {
-                        if (SelectedPet != null
-                        && SelectedPet.Id == pet.Id)
-                        {
-                            <option value="@pet.Id" selected>@pet.Name</option>
-                        }
-                        else
-                        {
-                            <option value="@pet.Id">@pet.Name</option>
-                        }
-                    }
-                </select>
-            }
-        </div>
-        <!-- Do the same for Vegetables -->
-        <div class="col-4">
-            @if (ShowList["Vegetables"])
-            {
-                <label for="vegetable">Vegetable</label>
-                <br />
-                <select id="vegetable" class="form-select" @onchange="VegetableSelected">
-                    <option value="0">None</option>
-                    @foreach (var vegetable in Vegetables.List)
-                    {
-                        if (SelectedVegetable != null
-                        && SelectedVegetable.Id == vegetable.Id)
-                        {
-                            <option value="@vegetable.Id" selected>@vegetable.Name</option>
-                        }
-                        else
-                        {
-                            <option value="@vegetable.Id">@vegetable.Name</option>
-                        }
-                    }
-                </select>
-            }
-        </div>
+        <MyList ShowList="@ShowList["Pets"]" 
+                Title="Pets" Items="@Pets.List" 
+                OnSelected="PetSelected" 
+                SelectedItem="@SelectedPet" 
+                ItemText="p => p.Name" 
+                ItemValue="p => p.Id.ToString()" />
+
+        <MyList ShowList="@ShowList["Vegetables"]" 
+                Title="Vegetables" Items="@Vegetables.List" 
+                OnSelected="VegetableSelected" 
+                SelectedItem="@SelectedVegetable" 
+                ItemText="v => v.Name" 
+                ItemValue="v => v.Id.ToString()" />
     </div>
 </div>
+
 <br />
 <br />
 <h3>Show or Hide Lists</h3>
