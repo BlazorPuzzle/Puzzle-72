@@ -1,21 +1,21 @@
 @typeparam TItem
-<div class="col-4">
-	@if (ShowList)
-	{
+@if (ShowList)
+{
+	<div class="col-4">
 		<label for="@Title.ToLowerInvariant()">@Title</label>
 		<br />
 		<select id="@Title.ToLowerInvariant()" class="form-select" @onchange="OnSelected">
 			<option value="0">None</option>
 			@foreach (var item in Items)
 			{
-					<option value="@ItemValue(item)"
-						selected="@(SelectedItem is not null && ItemValue(SelectedItem) == ItemValue(item) ? "selected" : null)">
-						@ItemText(item)
-					</option>
+				<option value="@ItemValue(item)"
+					selected="@(SelectedItem is not null && ItemValue(SelectedItem) == ItemValue(item) ? "selected" : null)">
+					@ItemText(item)
+				</option>
 			}
 		</select>
-	}
-</div>
+	</div>
+}
 
 @code {
 
