@@ -1,7 +1,7 @@
 # Puzzle #72 - Dynamic Bootstrap
 Carl and Jeff want to know how to show select (dropdown list) elements in a bootstrap grid when the lists themselves and therefore the number of select elements are not known until runtime.
 
-YouTube Video: https://youtu.be/
+YouTube Video: https://youtu.be/RLxbAmrHW5A
 
 Blazor Puzzle Home Page: https://blazorpuzzle.com
 
